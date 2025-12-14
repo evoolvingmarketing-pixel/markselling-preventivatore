@@ -43,7 +43,7 @@
       display:flex;gap:14px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;
     }
     h1{margin:0;font-weight:900;font-size:22px;line-height:1.2}
-    .sub{margin-top:8px;color:var(--muted);font-size:14px;line-height:1.55;max-width:760px}
+    .sub{margin-top:8px;color:var(--muted);font-size:14px;line-height:1.55;max-width:820px}
     .badge{
       display:inline-flex;align-items:center;gap:10px;
       padding:10px 14px;border-radius:999px;
@@ -58,7 +58,7 @@
     .bar{height:100%;width:0%;border-radius:999px;background:linear-gradient(90deg,var(--violet),var(--gold));box-shadow:0 0 18px rgba(130,77,235,.35)}
     .body{padding:22px 24px 10px}
     .q{font-weight:900;font-size:18px;line-height:1.25;margin:0 0 10px}
-    .p{color:rgba(255,255,255,.76);font-size:14px;line-height:1.6;margin:0 0 16px}
+    .p{color:rgba(255,255,255,.76);font-size:14px;line-height:1.65;margin:0 0 16px}
     .choices{display:grid;grid-template-columns:1fr;gap:12px}
     @media(min-width:820px){.choices{grid-template-columns:1fr 1fr}}
     .btn{
@@ -67,7 +67,7 @@
       align-items:center;
       justify-content:center;
       text-align:center;
-      min-height:72px;
+      min-height:78px;
       padding:16px 14px;
       border-radius:16px;
       cursor:pointer;
@@ -83,8 +83,8 @@
     .btn.gold{border-color:rgba(184,155,86,.55);background:rgba(184,155,86,.10)}
     .btn.gold:hover{background:rgba(184,155,86,.16);border-color:rgba(184,155,86,.85)}
     .btn .t{font-size:15px;font-weight:950}
-    .btn .s{margin-top:6px;font-weight:700;opacity:.82;font-size:12.8px;line-height:1.45}
-    .mini{margin-top:10px;color:rgba(255,255,255,.62);font-size:12.5px;line-height:1.5}
+    .btn .s{margin-top:6px;font-weight:700;opacity:.86;font-size:12.8px;line-height:1.45}
+    .mini{margin-top:10px;color:rgba(255,255,255,.62);font-size:12.5px;line-height:1.55}
     .foot{padding:14px 24px 22px;display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
     .nav{
       min-height:46px;
@@ -120,9 +120,10 @@
       background:transparent;border:0;cursor:pointer;
       display:flex;align-items:center;justify-content:space-between;gap:10px;
       color:#fff;font-weight:950;font-size:14px;
+      text-align:left;
     }
-    .accBtn span{color:#E7D7A2;font-weight:950}
-    .panel{display:none;padding:0 16px 14px;color:rgba(255,255,255,.74);font-size:13.5px;line-height:1.6}
+    .accBtn span{color:#E7D7A2;font-weight:950;white-space:nowrap}
+    .panel{display:none;padding:0 16px 14px;color:rgba(255,255,255,.74);font-size:13.5px;line-height:1.65}
     .cta{
       width:100%;
       margin-top:14px;
@@ -147,7 +148,11 @@
       <div class="head">
         <div>
           <h1>MarkSelling™ — Previsione Strategica del Reparto</h1>
-          <div class="sub">4 step rapidi per costruire la tua architettura di crescita. Ogni risposta definisce l’investimento reale per eliminare attriti e stabilizzare il fatturato.</div>
+          <div class="sub">
+            4 step rapidi per capire <b>quale struttura serve davvero</b> per trasformare lead in appuntamenti e vendite:
+            <b>Marketing (strategia + lead generation)</b>, <b>Setter (qualifica e agenda)</b>, <b>Closer (chiusura)</b>.
+            Ogni risposta determina setup + fee mensile del “reparto”.
+          </div>
         </div>
         <div class="badge"><span class="dot"></span> Dark Premium · Gold Accent</div>
       </div>
@@ -181,45 +186,46 @@
   var result = document.getElementById('result');
 
   var state = { marketing:null, setter:null, closer:null };
+
   var steps = [
     {
       key:'marketing',
-      q:'Step 1 — Allineamento Marketing: chi ha la regia sulla vendita?',
-      p:'Non stiamo “valutando le ads”. Stiamo definendo la regia unica (KPI, pipeline, messaggi, follow-up, scoring) che trasforma i lead in fatturato. Se hai già un team o un’agenzia, non la sostituiamo: la integriamo dentro un processo unico e misurabile.',
+      q:'Step 1 — Marketing: vuoi che gestiamo anche Strategia + Lead Generation?',
+      p:'Qui non si parla di “fare ads”. Si parla di <b>costruire la macchina che porta lead giusti</b> dentro un processo vendite misurabile: strategia, tracciamenti, KPI, creatività, ottimizzazione e allineamento completo con CRM e pipeline. Se hai già un’agenzia o un team interno, <b>non ti chiediamo di cambiarli</b>: possiamo lavorare in integrazione e mettere la “regia” unica su numeri e processo.',
       choices:[
-        {k:'marketing', v:'yes', label:'Attiva Marketing MarkSelling', style:'violet',
-          s:'Regia completa: campagne, tracciamenti, ottimizzazioni in logica vendite, KPI unificati.'},
-        {k:'marketing', v:'integrate', label:'No, ho già chi mi segue (team/agenzia)', style:'gold',
-          s:'Integriamo KPI, CRM e flusso vendita per trasformare lead in fatturato senza cambiare fornitore.'}
+        {k:'marketing', v:'yes', label:'Sì, voglio il Team Marketing MarkSelling', style:'violet',
+          s:'Strategia + Lead Generation: campagne, tracciamenti, ottimizzazione e KPI collegati alle vendite.'},
+        {k:'marketing', v:'integrate', label:'No, ho già un team/agenzia (voglio integrazione)', style:'gold',
+          s:'Non sostituiamo nessuno: integriamo KPI, CRM, pipeline e follow-up per far rendere i lead.'}
       ]
     },
     {
       key:'setter',
-      q:'Step 2 — Setter: quanta capacità di contatto ti serve?',
-      p:'I Setter sono la prima linea anti-perdita: contatto entro 5 minuti, qualificazione, agenda piena di opportunità reali. Più velocità e metodo = più appuntamenti e meno sprechi.',
+      q:'Step 2 — Setter: quanta capacità di contatto e qualificazione ti serve?',
+      p:'I <b>Setter</b> sono il reparto commerciale “di frontiera”: contattano i lead, li qualificano, eliminano perdite e <b>fissano appuntamenti</b> con chi chiude. Standard operativo: contatto rapido, domande giuste, agenda pulita. Se oggi entrano lead ma non vengono lavorati bene, è qui che stai perdendo fatturato.',
       choices:[
         {k:'setter', v:1, label:'1 Setter', style:'violet', s:'Per volumi controllati e processo stabile.'},
-        {k:'setter', v:2, label:'2 Setter', style:'gold', s:'Per continuità, copertura e maggior spinta.'},
+        {k:'setter', v:2, label:'2 Setter', style:'gold', s:'Per continuità, copertura e più appuntamenti.'},
         {k:'setter', v:3, label:'3+ Setter', style:'violet', s:'Per crescita aggressiva e gestione massiva.'}
       ]
     },
     {
       key:'closer',
-      q:'Step 3 — Closer: chi si prende la responsabilità della chiusura?',
-      p:'Qui si decide il livello di responsabilità sul risultato. Se usi i tuoi commerciali, li allineiamo a script, pipeline e forecast. Se scegli i Closer MarkSelling, ci assumiamo la gestione diretta della trattativa fino alla firma (a provvigione).',
+      q:'Step 3 — Closer: chi gestisce la vendita e la firma?',
+      p:'I <b>Closer</b> sono il team vendite: gestiscono gli appuntamenti e portano la trattativa a firma. Se scegli i Closer MarkSelling, <b>ci assumiamo noi la responsabilità</b> della chiusura (a provvigione). Se invece hai un team interno, lo allineiamo con script, pipeline, follow-up e forecast per rendere la chiusura più prevedibile.',
       choices:[
-        {k:'closer', v:'internal', label:'Chiudono i miei commerciali interni', style:'gold',
-          s:'Allineiamo script, pipeline, follow-up e forecast per rendere la chiusura prevedibile.'},
         {k:'closer', v:'ms1', label:'Voglio i Closer MarkSelling (a provvigione)', style:'violet',
-          s:'Responsabilità totale sulla trattativa: dal primo appuntamento alla firma.'}
+          s:'Responsabilità diretta sulla trattativa: dall’appuntamento alla firma.'},
+        {k:'closer', v:'internal', label:'Chiudono i miei commerciali interni', style:'gold',
+          s:'Allineiamo pipeline, script, follow-up e forecast per aumentare conversioni e controllo.'}
       ]
     },
     {
       key:'output',
-      q:'Step 4 — Riepilogo investimento per la tua struttura di crescita',
-      p:'Questa non è una “stima generica”: è la somma dei pezzi reali che attiviamo (team + sistemi + playbook) per far lavorare marketing e vendite come un unico organismo.',
+      q:'Step 4 — Riepilogo investimento (Setup + Fee mensile)',
+      p:'Questa stima è costruita sui <b>pezzi reali</b> che attiviamo: processi, CRM, playbook e team. Il risultato è un reparto che fa lavorare marketing e vendite come un unico organismo, con responsabilità e KPI chiari.',
       choices:[
-        {k:'output', v:'go', label:'Mostrami il preventivo', style:'violet', s:'Conferma e genera la previsione economica.'}
+        {k:'output', v:'go', label:'Mostrami il preventivo', style:'violet', s:'Genera la previsione economica completa.'}
       ]
     }
   ];
@@ -233,20 +239,25 @@
   function compute(){
     var setup = 0, monthly = 0;
 
+    // setup base
     setup += 500;   // analisi processi
     setup += 1500;  // setup CRM
 
+    // marketing opzionale
     if(state.marketing === 'yes'){
       setup += 800;     // setup marketing (account+tracking)
       monthly += 350;   // team marketing
     }
 
-    monthly += 400; // direzione e PM sempre
+    // direzione sempre
+    monthly += 400; // direzione e PM
 
+    // setter
     var sCount = (state.setter === 3) ? 3 : (state.setter || 1);
     setup += 700 * sCount;     // formazione setter
     monthly += 300 * sCount;   // fee setter
 
+    // closer (a provvigione) - qui conteggiamo solo onboarding
     var closerCount = (state.closer === 'ms1') ? 1 : 0;
     if(closerCount > 0){
       setup += 900; // formazione closer
@@ -306,11 +317,12 @@
       var b = item.querySelector('.accBtn');
       var p = item.querySelector('.panel');
       b.addEventListener('click', function(){
+        var isOpen = (p.style.display === 'block');
         items.forEach(function(other){
           var op = other.querySelector('.panel');
           if(op) op.style.display='none';
         });
-        p.style.display = (p.style.display==='block')?'none':'block';
+        p.style.display = isOpen ? 'none' : 'block';
       });
     });
     var first = container.querySelector('.panel');
@@ -322,62 +334,74 @@
     body.innerHTML = '';
     result.style.display='block';
 
-    var marketingLabel = (state.marketing==='yes') ? 'Attivo con MarkSelling' : 'Integrazione (team/agenzia esistente)';
+    var marketingLabel = (state.marketing==='yes') ? 'Team Marketing MarkSelling (Strategia + Lead Gen)' : 'Integrazione (team/agenzia esistente)';
     var setterLabel = (state.setter===3) ? '3+ (stimato 3)' : String(state.setter||1);
-    var closerLabel = (state.closer==='ms1') ? 'Closer MarkSelling (a provvigione)' : 'Chiusura interna';
+    var closerLabel = (state.closer==='ms1') ? 'Closer MarkSelling (a provvigione)' : 'Team vendite interno';
 
     result.innerHTML =
-      '<div class="q">Il tuo investimento stimato (Setup + Fee mensile)</div>' +
-      '<div class="p">Sotto trovi i numeri e <b>cosa include ogni voce</b>. È qui che si costruisce la previsione: team + sistemi + responsabilità.</div>' +
+      '<div class="q">La tua previsione economica (Setup + Fee mensile)</div>' +
+      '<div class="p">Sotto trovi i numeri e <b>cosa include ogni voce</b>. Qui non stai acquistando “servizi”: stai attivando un <b>reparto</b> con processo, sistemi e responsabilità chiare.</div>' +
+
       '<div class="grid">' +
-        '<div class="tile"><h3>Setup iniziale (una tantum)</h3><div class="val">'+money(out.setup)+'</div><div class="mini">Attivazione completa: processi, CRM, playbook e onboarding del team.</div></div>' +
+        '<div class="tile"><h3>Setup iniziale (una tantum)</h3><div class="val">'+money(out.setup)+'</div><div class="mini">Attivazione: processi, CRM, playbook e onboarding del team.</div></div>' +
         '<div class="tile"><h3>Fee mensile (fisso)</h3><div class="val">'+money(out.monthly)+'</div><div class="mini">Direzione + reparti operativi (marketing se incluso) + setter.</div></div>' +
       '</div>' +
-      '<div class="mini" style="margin-top:12px;"><b>Configurazione scelta:</b> Marketing: '+marketingLabel+' · Setter: '+setterLabel+' · Closer: '+closerLabel+'</div>' +
+
+      '<div class="mini" style="margin-top:12px;"><b>Configurazione scelta:</b> '+
+        'Marketing: '+marketingLabel+' · Setter: '+setterLabel+' · Closer: '+closerLabel+
+      '</div>' +
+
       '<div class="acc" id="acc">' +
 
         '<div class="item">' +
           '<button class="accBtn" type="button">Setup iniziale — cosa include <span>'+money(out.setup)+'</span></button>' +
           '<div class="panel"><ul style="margin:10px 0 0 18px;padding:0">' +
-            '<li><b>Audit processi & obiettivi</b> (mappiamo attriti, tempi morti e priorità commerciali).</li>' +
-            '<li><b>Setup CRM & Pipeline anti-perdita</b> (stati, regole, responsabilità, tracciamento).</li>' +
-            '<li><b>Automazioni & messaggistica</b> (follow-up, nurturing, tag e fit scoring).</li>' +
-            '<li><b>Onboarding & Playbook</b> (script, checklist, standard “contatto entro 5 min”).</li>' +
+            '<li><b>Audit processi & obiettivi</b> — mappiamo attriti, priorità commerciali e numeri da controllare.</li>' +
+            '<li><b>Setup CRM & Pipeline anti-perdita</b> — stati, regole, responsabilità e tracciamento end-to-end.</li>' +
+            '<li><b>Automazioni & messaggistica</b> — follow-up, nurturing, tag, fit scoring e recupero lead persi.</li>' +
+            '<li><b>Playbook operativo</b> — script, checklist, standard di contatto e qualità appuntamenti.</li>' +
             (state.marketing==='yes'
-              ? '<li><b>Setup ADV & tracciamenti</b> (account, eventi, conversioni, ottimizzazione in logica vendite).</li>'
-              : '<li><b>Integrazione con team/agenzia</b> (KPI condivisi, pipeline e regia unica senza sostituzione).</li>') +
-            '<li><b>Formazione Setter</b> ('+out.sCount+' risorse) '+(out.closerCount?'+ <b>Formazione Closer</b>.':' + <b>Allineamento chiusura interna</b>.')+'</li>' +
+              ? '<li><b>Strategia + Lead Generation</b> — setup ADV, tracciamenti e ottimizzazione con KPI collegati alle vendite.</li>'
+              : '<li><b>Integrazione con team/agenzia</b> — KPI condivisi, allineamento marketing→vendite e regia su pipeline/follow-up.</li>') +
+            '<li><b>Formazione Setter</b> ('+out.sCount+' risorse) — qualificazione, gestione obiezioni e agenda “pulita”.</li>' +
+            (out.closerCount
+              ? '<li><b>Onboarding Closer</b> — metodo di chiusura, handover dai setter, pipeline e responsabilità fino alla firma.</li>'
+              : '<li><b>Allineamento team vendite interno</b> — pipeline, follow-up e forecast per aumentare controllo e conversioni.</li>') +
           '</ul></div>' +
         '</div>' +
 
         '<div class="item">' +
           '<button class="accBtn" type="button">Fee mensile — cosa include <span>'+money(out.monthly)+'</span></button>' +
           '<div class="panel"><ul style="margin:10px 0 0 18px;padding:0">' +
-            '<li><b>Direzione & PM</b> (forecast settimanale, KPI unificati, correzioni rapide).</li>' +
+            '<li><b>Direzione & Project Management</b> — KPI unificati, forecast, correzioni rapide e regia del reparto.</li>' +
             (state.marketing==='yes'
-              ? '<li><b>Reparto Marketing</b> (gestione campagne, ottimizzazione e KPI legati al fatturato).</li>'
-              : '<li><b>Regia sull’ecosistema esistente</b> (allineamento marketing-vendite e KPI condivisi).</li>') +
-            '<li><b>Setter</b> ('+out.sCount+') (presa appuntamenti, qualificazione, agenda pulita).</li>' +
-          '</ul><div class="mini" style="margin-top:10px;">' +
+              ? '<li><b>Marketing (Strategia + Lead Gen)</b> — gestione campagne, ottimizzazione e report in logica fatturato.</li>'
+              : '<li><b>Regia su marketing esistente</b> — allineamento KPI e flusso lead→appuntamento→vendita.</li>') +
+            '<li><b>Setter</b> ('+out.sCount+') — contatto, qualificazione, recupero, agenda e controllo qualità appuntamenti.</li>' +
+          '</ul>' +
+          '<div class="mini" style="margin-top:10px;">' +
             (state.closer==='ms1'
-              ? '<b>Nota Closer:</b> la chiusura è a provvigione (si attiva sul fatturato generato).'
-              : '<b>Nota:</b> se la chiusura è interna, allineiamo script, follow-up e pipeline per renderla prevedibile.') +
+              ? '<b>Nota Closer:</b> la chiusura è a provvigione e si attiva sul fatturato generato.'
+              : '<b>Nota:</b> con chiusura interna, impostiamo processo e controllo per rendere la vendita più prevedibile.') +
           '</div></div>' +
         '</div>' +
 
         '<div class="item">' +
-          '<button class="accBtn" type="button">Cosa succede ora <span>Convalida</span></button>' +
-          '<div class="panel"><p style="margin:10px 0 0">La convalida strategica serve a verificare i numeri sul tuo caso reale e finalizzare la configurazione migliore.</p>' +
-          '<ul style="margin:10px 0 0 18px;padding:0">' +
-            '<li>Validiamo obiettivo e capacità (marketing → setter → closer).</li>' +
-            '<li>Definiamo pipeline, standard di contatto e KPI settimanali.</li>' +
-            '<li>Impostiamo una roadmap di 30 giorni con responsabilità chiare.</li>' +
-          '</ul></div>' +
+          '<button class="accBtn" type="button">Prossimo step — Audit gratuito con uno strategist <span>Gratis</span></button>' +
+          '<div class="panel">' +
+            '<p style="margin:10px 0 0">L’<b>Audit gratuito</b> serve a trasformare questa previsione in una configurazione reale sul tuo caso:</p>' +
+            '<ul style="margin:10px 0 0 18px;padding:0">' +
+              '<li>Validiamo obiettivo, volumi e capacità (marketing → setter → closer).</li>' +
+              '<li>Definiamo KPI, pipeline, tempi di contatto e standard di qualificazione.</li>' +
+              '<li>Impostiamo una roadmap 30 giorni con responsabilità chiare e priorità operative.</li>' +
+            '</ul>' +
+          '</div>' +
         '</div>' +
 
       '</div>' +
-      '<a class="cta" href="https://www.markselling.it/booking-audit/" target="_blank" rel="noopener">PRENOTA LA CONVALIDA STRATEGICA (DISCUTIAMO I NUMERI) →</a>' +
-      '<div class="mini" style="margin-top:10px;">Consulenza gratuita, zero vincoli. Serve a confermare la configurazione e rendere i risultati prevedibili.</div>';
+
+      '<a class="cta" href="https://www.markselling.it/booking-audit/" target="_blank" rel="noopener">PRENOTA AUDIT GRATUITO CON UNO STRATEGIST →</a>' +
+      '<div class="mini" style="margin-top:10px;">Nessun vincolo, nessun impegno. Serve a capire se e come MarkSelling può portarti risultati misurabili.</div>';
 
     accordionSingle(document.getElementById('acc'));
   }
