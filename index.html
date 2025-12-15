@@ -7,16 +7,19 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
   <style>
     :root{
       --violet:#824DEB;
+      --violet2:#6C3EE0;
       --gold:#B89B56;
       --bg:#05030A;
-      --card:rgba(12,10,18,.78);
       --line:rgba(255,255,255,.10);
       --text:#ffffff;
       --muted:rgba(255,255,255,.72);
+      --muted2:rgba(255,255,255,.62);
     }
+
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
@@ -29,6 +32,7 @@
         linear-gradient(180deg, #05030A 0%, #020108 100%);
       padding:28px 16px;
     }
+
     .wrap{max-width:1100px;margin:0 auto}
     .card{
       border-radius:22px;
@@ -37,37 +41,64 @@
       box-shadow:0 18px 60px rgba(0,0,0,.55);
       overflow:hidden;
     }
+
     .head{
       padding:22px 24px 16px;
       border-bottom:1px solid rgba(255,255,255,.08);
-      display:flex;gap:14px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;
     }
-    h1{margin:0;font-weight:900;font-size:22px;line-height:1.2}
-    .sub{margin-top:8px;color:var(--muted);font-size:14px;line-height:1.55;max-width:820px}
-    .badge{
-      display:inline-flex;align-items:center;gap:10px;
-      padding:10px 14px;border-radius:999px;
-      background:rgba(184,155,86,.10);
-      border:1px solid rgba(184,155,86,.30);
-      color:#E7D7A2;font-weight:800;font-size:13px;white-space:nowrap
+
+    h1{
+      margin:0;
+      font-weight:900;
+      font-size:22px;
+      line-height:1.2
     }
-    .dot{width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 6px rgba(184,155,86,.15)}
-    .progress{padding:14px 24px 18px;border-bottom:1px solid rgba(255,255,255,.08)}
-    .progressTop{display:flex;justify-content:space-between;gap:12px;color:rgba(255,255,255,.65);font-size:13px;margin-bottom:10px;flex-wrap:wrap}
+    .sub{
+      margin-top:10px;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.6;
+      max-width:920px
+    }
+    .sub b{color:#fff}
+
+    .progress{
+      padding:14px 24px 18px;
+      border-bottom:1px solid rgba(255,255,255,.08)
+    }
+    .progressTop{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      color:rgba(255,255,255,.65);
+      font-size:13px;
+      margin-bottom:10px;
+      flex-wrap:wrap
+    }
     .barBg{height:10px;background:rgba(255,255,255,.08);border-radius:999px;overflow:hidden}
-    .bar{height:100%;width:0%;border-radius:999px;background:linear-gradient(90deg,var(--violet),var(--gold));box-shadow:0 0 18px rgba(130,77,235,.35)}
+    .bar{
+      height:100%;
+      width:0%;
+      border-radius:999px;
+      background:linear-gradient(90deg,var(--violet),var(--gold));
+      box-shadow:0 0 18px rgba(130,77,235,.35)
+    }
+
     .body{padding:22px 24px 10px}
     .q{font-weight:900;font-size:18px;line-height:1.25;margin:0 0 10px}
     .p{color:rgba(255,255,255,.76);font-size:14px;line-height:1.65;margin:0 0 16px}
+    .p b{color:#fff}
+
     .choices{display:grid;grid-template-columns:1fr;gap:12px}
     @media(min-width:820px){.choices{grid-template-columns:1fr 1fr}}
+
     .btn{
       width:100%;
       display:flex;
       align-items:center;
       justify-content:center;
       text-align:center;
-      min-height:78px;
+      min-height:82px;
       padding:16px 14px;
       border-radius:16px;
       cursor:pointer;
@@ -79,13 +110,38 @@
       transition:.16s ease;
       user-select:none;
     }
-    .btn:hover{transform:translateY(-1px);background:rgba(130,77,235,.18);border-color:rgba(130,77,235,.85)}
+    .btn:hover{
+      transform:translateY(-1px);
+      background:rgba(130,77,235,.18);
+      border-color:rgba(130,77,235,.85)
+    }
     .btn.gold{border-color:rgba(184,155,86,.55);background:rgba(184,155,86,.10)}
     .btn.gold:hover{background:rgba(184,155,86,.16);border-color:rgba(184,155,86,.85)}
     .btn .t{font-size:15px;font-weight:950}
-    .btn .s{margin-top:6px;font-weight:700;opacity:.86;font-size:12.8px;line-height:1.45}
-    .mini{margin-top:10px;color:rgba(255,255,255,.62);font-size:12.5px;line-height:1.55}
-    .foot{padding:14px 24px 22px;display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
+    .btn .s{margin-top:6px;font-weight:700;opacity:.85;font-size:12.9px;line-height:1.45}
+
+    .btn.bigPrimary{
+      grid-column:1/-1;
+      min-height:90px;
+      border-color:rgba(130,77,235,.85);
+      background:linear-gradient(180deg, rgba(130,77,235,1), rgba(108,62,224,.72));
+      box-shadow:0 10px 30px rgba(130,77,235,.22);
+    }
+    .btn.bigPrimary:hover{
+      transform:translateY(-1px);
+      filter:brightness(1.03);
+      border-color:rgba(255,255,255,.14);
+    }
+
+    .mini{margin-top:12px;color:rgba(255,255,255,.62);font-size:12.5px;line-height:1.55}
+
+    .foot{
+      padding:14px 24px 22px;
+      display:flex;
+      gap:10px;
+      justify-content:flex-end;
+      flex-wrap:wrap
+    }
     .nav{
       min-height:46px;
       padding:10px 14px;
@@ -105,29 +161,99 @@
       background:linear-gradient(180deg, rgba(130,77,235,.95), rgba(130,77,235,.72));
     }
     .nav:disabled{opacity:.45;cursor:not-allowed}
-    .res{padding:18px 24px 22px;border-top:1px solid rgba(255,255,255,.08);display:none}
+
+    .res{
+      padding:18px 24px 22px;
+      border-top:1px solid rgba(255,255,255,.08);
+      display:none
+    }
     .grid{display:grid;grid-template-columns:1fr;gap:12px;margin-top:14px}
     @media(min-width:820px){.grid{grid-template-columns:1fr 1fr}}
-    .tile{border-radius:18px;padding:16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.10)}
+
+    .tile{
+      border-radius:18px;
+      padding:16px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.10)
+    }
     .tile h3{margin:0 0 6px;font-weight:950;font-size:15px}
     .val{color:#E7D7A2;font-weight:950;font-size:28px;margin-top:2px}
-    .acc{margin-top:14px;border-radius:18px;overflow:hidden;border:1px solid rgba(255,255,255,.10)}
-    .item{border-top:1px solid rgba(255,255,255,.08);background:rgba(0,0,0,.12)}
+    .pill{
+      display:inline-flex;align-items:center;gap:10px;
+      padding:10px 12px;border-radius:999px;
+      border:1px solid rgba(184,155,86,.28);
+      background:rgba(184,155,86,.08);
+      color:#E7D7A2;font-weight:900;font-size:12.5px;
+    }
+
+    /* Accordion */
+    .acc{
+      margin-top:14px;
+      border-radius:18px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.10)
+    }
+    .item{
+      border-top:1px solid rgba(255,255,255,.08);
+      background:rgba(0,0,0,.12)
+    }
     .item:first-child{border-top:0}
+
     .accBtn{
       width:100%;
       padding:14px 16px;
-      background:transparent;border:0;cursor:pointer;
-      display:flex;align-items:center;justify-content:space-between;gap:10px;
-      color:#fff;font-weight:950;font-size:14px;
-      text-align:left;
+      background:transparent;
+      border:0;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      color:#fff;
+      font-weight:950;
+      font-size:14px;
     }
-    .accBtn span{color:#E7D7A2;font-weight:950;white-space:nowrap}
-    .panel{display:none;padding:0 16px 14px;color:rgba(255,255,255,.74);font-size:13.5px;line-height:1.65}
+    .accLeft{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+    .accIcon{
+      width:26px;height:26px;border-radius:9px;
+      display:inline-flex;align-items:center;justify-content:center;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.05);
+      color:#fff;
+      font-weight:950;
+      flex:0 0 auto;
+    }
+    .accTitle{
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .accBtn span{
+      color:#E7D7A2;
+      font-weight:950;
+      flex:0 0 auto;
+    }
+
+    .panel{
+      display:none;
+      padding:0 16px 16px;
+      color:rgba(255,255,255,.74);
+      font-size:13.5px;
+      line-height:1.65
+    }
+    .panel ul{margin:10px 0 0 18px;padding:0}
+    .panel li{margin:6px 0}
+    .panel b{color:#fff}
+
     .cta{
       width:100%;
       margin-top:14px;
-      padding:14px 16px;
+      padding:16px 16px;
       border-radius:16px;
       border:1px solid rgba(130,77,235,.85);
       background:linear-gradient(180deg, rgba(130,77,235,1), rgba(130,77,235,.75));
@@ -139,22 +265,24 @@
       align-items:center;
       justify-content:center;
       gap:10px;
+      box-shadow:0 10px 30px rgba(130,77,235,.22);
     }
+    .cta:hover{filter:brightness(1.03);transform:translateY(-1px)}
+    .fine{margin-top:10px;color:rgba(255,255,255,.62);font-size:12.5px;line-height:1.55}
   </style>
 </head>
+
 <body>
   <div class="wrap">
     <div class="card" id="app">
+
       <div class="head">
-        <div>
-          <h1>MarkSelling™ — Previsione Strategica del Reparto</h1>
-          <div class="sub">
-            4 step rapidi per capire <b>quale struttura serve davvero</b> per trasformare lead in appuntamenti e vendite:
-            <b>Marketing (strategia + lead generation)</b>, <b>Setter (qualifica e agenda)</b>, <b>Closer (chiusura)</b>.
-            Ogni risposta determina setup + fee mensile del “reparto”.
-          </div>
+        <h1>MarkSelling™ — Previsione Strategica del Reparto</h1>
+        <div class="sub">
+          Configura in 4 step il tuo reparto “Marketing &amp; Vendite”: <b>Marketing</b> (strategia + lead generation),
+          <b>Setter</b> (contatto, qualifica, agenda), <b>Closer</b> (vendita e firma).
+          A fine flow vedrai <b>Setup Fee</b> + <b>Fee Mensile</b> (a scalini per capacità) e l’eventuale <b>Success Fee</b>.
         </div>
-        <div class="badge"><span class="dot"></span> Dark Premium · Gold Accent</div>
       </div>
 
       <div class="progress">
@@ -169,7 +297,7 @@
 
       <div class="foot">
         <button class="nav" id="back" type="button">Indietro</button>
-        <button class="nav" id="restart" type="button">Ricomincia</button>
+        <button class="nav primary" id="restart" type="button">Ricomincia</button>
       </div>
 
       <div class="res" id="result"></div>
@@ -185,45 +313,77 @@
   var restart = document.getElementById('restart');
   var result = document.getElementById('result');
 
-  var state = { marketing:null, setter:null, closer:null };
+  // ===== Stato =====
+  // marketing: 'ms' | 'integrate'
+  // capacity: 150 | 250 | 400 | 600
+  // closer: 'ms' | 'internal'
+  var state = { marketing:null, capacity:null, closer:null };
 
+  // ===== Pricing (Netto IVA) =====
+  var SETUP_FEE = 3500;
+
+  var TIERS = [
+    { cap:150, name:'Livello 1 Base',    monthly:3500, range:'Fino a 150 lead/mese' },
+    { cap:250, name:'Livello 2 Crescita',monthly:4000, range:'Da 151 a 250 lead/mese' },
+    { cap:400, name:'Livello 3 Espansione',monthly:5000, range:'Da 251 a 400 lead/mese' },
+    { cap:600, name:'Livello 4 Full Scale',monthly:6500, range:'Da 401 a 600 lead/mese' }
+  ];
+
+  function getTier(cap){
+    for(var i=0;i<TIERS.length;i++){ if(TIERS[i].cap === cap) return TIERS[i]; }
+    return TIERS[0];
+  }
+
+  function money(n){
+    return '€ ' + (Math.round(n)).toLocaleString('it-IT');
+  }
+
+  // ===== Step definitions =====
   var steps = [
     {
       key:'marketing',
-      q:'Step 1 — Marketing: vuoi che gestiamo anche Strategia + Lead Generation?',
-      p:'Qui non si parla di “fare ads”. Si parla di <b>costruire la macchina che porta lead giusti</b> dentro un processo vendite misurabile: strategia, tracciamenti, KPI, creatività, ottimizzazione e allineamento completo con CRM e pipeline. Se hai già un’agenzia o un team interno, <b>non ti chiediamo di cambiarli</b>: possiamo lavorare in integrazione e mettere la “regia” unica su numeri e processo.',
+      q:'Step 1 — Marketing (strategia + lead generation): come lo vuoi gestire?',
+      p:'Qui definiamo <b>chi guida la macchina dei lead</b>. Il Marketing MarkSelling non è “fare ads”: è strategia, tracciamento, creatività e ottimizzazione con un solo obiettivo: <b>portare lead che i Setter possono convertire in appuntamenti</b> (e quindi vendite). Se hai già un team o un’agenzia, <b>non ti chiediamo di cambiarla</b>: la integriamo nel nostro processo con KPI e regia unificata.',
       choices:[
-        {k:'marketing', v:'yes', label:'Sì, voglio il Team Marketing MarkSelling', style:'violet',
-          s:'Strategia + Lead Generation: campagne, tracciamenti, ottimizzazione e KPI collegati alle vendite.'},
-        {k:'marketing', v:'integrate', label:'No, ho già un team/agenzia (voglio integrazione)', style:'gold',
-          s:'Non sostituiamo nessuno: integriamo KPI, CRM, pipeline e follow-up per far rendere i lead.'}
+        // positive first
+        {k:'marketing', v:'ms', label:'Sì, voglio Marketing MarkSelling', style:'violet',
+          s:'Gestiamo strategia + lead generation: campagne, tracking, KPI e ottimizzazione in logica vendite.'},
+        {k:'marketing', v:'integrate', label:'No, ho già team/agenzia (integriamo)', style:'gold',
+          s:'Non sostituiamo: allineiamo funnel, CRM, KPI e flusso operativo per trasformare i lead in fatturato.'}
       ]
     },
     {
-      key:'setter',
-      q:'Step 2 — Setter: quanta capacità di contatto e qualificazione ti serve?',
-      p:'I <b>Setter</b> sono il reparto commerciale “di frontiera”: contattano i lead, li qualificano, eliminano perdite e <b>fissano appuntamenti</b> con chi chiude. Standard operativo: contatto rapido, domande giuste, agenda pulita. Se oggi entrano lead ma non vengono lavorati bene, è qui che stai perdendo fatturato.',
+      key:'capacity',
+      q:'Step 2 — Setter (qualifica e agenda): che capacità di gestione ti serve?',
+      p:'I Setter sono il <b>team commerciale operativo</b>: contattano i lead, li qualificano, gestiscono obiezioni iniziali e fissano appuntamenti in agenda al reparto vendite. La fee mensile cresce solo quando il volume di lead <b>satura la capacità operativa</b> e serve più struttura per mantenere standard, velocità e qualità.',
       choices:[
-        {k:'setter', v:1, label:'1 Setter', style:'violet', s:'Per volumi controllati e processo stabile.'},
-        {k:'setter', v:2, label:'2 Setter', style:'gold', s:'Per continuità, copertura e più appuntamenti.'},
-        {k:'setter', v:3, label:'3+ Setter', style:'violet', s:'Per crescita aggressiva e gestione massiva.'}
+        // positive first, highest clarity
+        {k:'capacity', v:150, label:'Capacità Base', style:'violet',
+          s:'Fino a 150 lead/mese (standard di contatto + qualifica + agenda).'},
+        {k:'capacity', v:250, label:'Capacità Crescita', style:'gold',
+          s:'Da 151 a 250 lead/mese (più copertura e continuità operativa).'},
+        {k:'capacity', v:400, label:'Capacità Espansione', style:'violet',
+          s:'Da 251 a 400 lead/mese (scalabilità e presidio costante).'},
+        {k:'capacity', v:600, label:'Capacità Full Scale', style:'gold',
+          s:'Da 401 a 600 lead/mese (massima spinta + struttura dedicata).'}
       ]
     },
     {
       key:'closer',
-      q:'Step 3 — Closer: chi gestisce la vendita e la firma?',
-      p:'I <b>Closer</b> sono il team vendite: gestiscono gli appuntamenti e portano la trattativa a firma. Se scegli i Closer MarkSelling, <b>ci assumiamo noi la responsabilità</b> della chiusura (a provvigione). Se invece hai un team interno, lo allineiamo con script, pipeline, follow-up e forecast per rendere la chiusura più prevedibile.',
+      q:'Step 3 — Closer (vendita e firma): chi chiude le trattative?',
+      p:'Qui definisci <b>chi si prende la responsabilità della vendita</b>. Se hai un team interno, lo supportiamo con pipeline, script e follow-up per rendere la chiusura più prevedibile. Se attivi i Closer MarkSelling, la chiusura viene gestita da noi e si applica una <b>Success Fee</b> (commissione sul fatturato generato).',
       choices:[
-        {k:'closer', v:'ms1', label:'Voglio i Closer MarkSelling (a provvigione)', style:'violet',
-          s:'Responsabilità diretta sulla trattativa: dall’appuntamento alla firma.'},
-        {k:'closer', v:'internal', label:'Chiudono i miei commerciali interni', style:'gold',
-          s:'Allineiamo pipeline, script, follow-up e forecast per aumentare conversioni e controllo.'}
+        // positive first
+        {k:'closer', v:'ms', label:'Sì, voglio i Closer MarkSelling', style:'violet',
+          s:'Attiva Success Fee: il team vendite MarkSelling gestisce la trattativa fino alla firma.'},
+        {k:'closer', v:'internal', label:'No, chiudono i miei commerciali', style:'gold',
+          s:'La vendita resta interna: allineiamo processo, pipeline, script e follow-up.'}
       ]
     },
     {
       key:'output',
-      q:'Step 4 — Riepilogo investimento (Setup + Fee mensile)',
-      p:'Questa stima è costruita sui <b>pezzi reali</b> che attiviamo: processi, CRM, playbook e team. Il risultato è un reparto che fa lavorare marketing e vendite come un unico organismo, con responsabilità e KPI chiari.',
+      q:'Step 4 — Riepilogo investimento (Setup + Fee Mensile + Success Fee)',
+      p:'Qui trovi la previsione economica completa. Non scomponiamo i costi “voce per voce”: ti mostriamo <b>cosa include ogni blocco</b>, perché stai attivando un reparto operativo (non una lista di servizi).',
       choices:[
         {k:'output', v:'go', label:'Mostrami il preventivo', style:'violet', s:'Genera la previsione economica completa.'}
       ]
@@ -232,49 +392,21 @@
 
   var idx = 0;
 
-  function money(n){
-    return '€ ' + (Math.round(n*100)/100).toLocaleString('it-IT',{minimumFractionDigits:0, maximumFractionDigits:0});
-  }
-
-  function compute(){
-    var setup = 0, monthly = 0;
-
-    // setup base
-    setup += 500;   // analisi processi
-    setup += 1500;  // setup CRM
-
-    // marketing opzionale
-    if(state.marketing === 'yes'){
-      setup += 800;     // setup marketing (account+tracking)
-      monthly += 350;   // team marketing
-    }
-
-    // direzione sempre
-    monthly += 400; // direzione e PM
-
-    // setter
-    var sCount = (state.setter === 3) ? 3 : (state.setter || 1);
-    setup += 700 * sCount;     // formazione setter
-    monthly += 300 * sCount;   // fee setter
-
-    // closer (a provvigione) - qui conteggiamo solo onboarding
-    var closerCount = (state.closer === 'ms1') ? 1 : 0;
-    if(closerCount > 0){
-      setup += 900; // formazione closer
-    }
-
-    return {setup:setup, monthly:monthly, sCount:sCount, closerCount:closerCount};
-  }
-
   function render(){
     bar.style.width = Math.round(((idx+1)/steps.length)*100) + '%';
     stepTxt.textContent = 'Step ' + (idx+1) + '/' + steps.length;
     back.disabled = (idx === 0);
 
     var st = steps[idx];
-    var html = '<div class="q">'+st.q+'</div><div class="p">'+st.p+'</div><div class="choices">';
+
+    var html = '';
+    html += '<div class="q">'+st.q+'</div>';
+    html += '<div class="p">'+st.p+'</div>';
+    html += '<div class="choices">';
+
     st.choices.forEach(function(c){
       var cls = 'btn' + (c.style==='gold' ? ' gold' : '');
+      if(st.key === 'output') cls += ' bigPrimary';
       html += '<button type="button" class="'+cls+'" data-k="'+c.k+'" data-v="'+String(c.v)+'">' +
                 '<div>' +
                   '<div class="t">'+c.label+'</div>' +
@@ -282,14 +414,15 @@
                 '</div>' +
               '</button>';
     });
+
     html += '</div>';
 
     if(idx>0){
-      html += '<div class="mini"><b>Scelte attuali:</b> ' +
-              'Marketing: ' + (state.marketing ? (state.marketing==='yes'?'MarkSelling':'Integrazione') : '—') + ' · ' +
-              'Setter: ' + (state.setter ? (state.setter===3?'3+':state.setter) : '—') + ' · ' +
-              'Closer: ' + (state.closer ? (state.closer==='ms1'?'MarkSelling':'Interni') : '—') +
-              '</div>';
+      var mLab = state.marketing ? (state.marketing==='ms' ? 'Marketing MarkSelling' : 'Integrazione team/agenzia') : '—';
+      var cLab = state.capacity ? ('Capacità: fino a ' + state.capacity + ' lead/mese') : '—';
+      var vLab = state.closer ? (state.closer==='ms' ? 'Vendite: Closer MarkSelling (Success Fee)' : 'Vendite: team interno') : '—';
+
+      html += '<div class="mini"><b>Scelte attuali:</b> ' + mLab + ' · ' + cLab + ' · ' + vLab + '</div>';
     }
 
     body.innerHTML = html;
@@ -298,11 +431,20 @@
       btn.addEventListener('click', function(){
         var k = btn.getAttribute('data-k');
         var v = btn.getAttribute('data-v');
-        if(k==='setter') v = parseInt(v,10);
-        state[k]=v;
+
+        if(k==='capacity') v = parseInt(v,10);
+
+        // normalize internal values
+        if(k==='closer' && v==='internal') v='internal';
+        if(k==='closer' && v==='ms') v='ms';
+        if(k==='marketing' && v==='ms') v='ms';
+        if(k==='marketing' && v==='integrate') v='integrate';
+
+        state[k] = v;
 
         if(idx < steps.length-1){
           idx++;
+          result.style.display='none';
           render();
         }else{
           showResult();
@@ -313,87 +455,183 @@
 
   function accordionSingle(container){
     var items = container.querySelectorAll('.item');
+
+    function closeAll(){
+      items.forEach(function(it){
+        it.classList.remove('open');
+        var p = it.querySelector('.panel');
+        if(p) p.style.display='none';
+        var ic = it.querySelector('.accIcon');
+        if(ic) ic.textContent = '+';
+      });
+    }
+
     items.forEach(function(item){
       var b = item.querySelector('.accBtn');
       var p = item.querySelector('.panel');
+      var ic = item.querySelector('.accIcon');
+
+      if(ic) ic.textContent = '+';
+
       b.addEventListener('click', function(){
-        var isOpen = (p.style.display === 'block');
-        items.forEach(function(other){
-          var op = other.querySelector('.panel');
-          if(op) op.style.display='none';
-        });
-        p.style.display = isOpen ? 'none' : 'block';
+        var isOpen = item.classList.contains('open');
+        closeAll();
+        if(!isOpen){
+          item.classList.add('open');
+          if(p) p.style.display='block';
+          if(ic) ic.textContent = '–';
+        }
       });
     });
-    var first = container.querySelector('.panel');
-    if(first) first.style.display='block';
+
+    // tutti chiusi di default (setup incluso)
+    closeAll();
   }
 
   function showResult(){
-    var out = compute();
     body.innerHTML = '';
-    result.style.display='block';
+    result.style.display = 'block';
 
-    var marketingLabel = (state.marketing==='yes') ? 'Team Marketing MarkSelling (Strategia + Lead Gen)' : 'Integrazione (team/agenzia esistente)';
-    var setterLabel = (state.setter===3) ? '3+ (stimato 3)' : String(state.setter||1);
-    var closerLabel = (state.closer==='ms1') ? 'Closer MarkSelling (a provvigione)' : 'Team vendite interno';
+    var tier = getTier(state.capacity || 150);
+    var setup = SETUP_FEE;
+    var monthly = tier.monthly;
+    var successActive = (state.closer === 'ms');
+
+    var marketingLabel =
+      (state.marketing === 'ms')
+        ? 'Marketing MarkSelling (strategia + lead generation)'
+        : 'Integrazione con team/agenzia esistente';
+
+    var salesLabel =
+      successActive
+        ? 'Closer MarkSelling (Success Fee % sul fatturato)'
+        : 'Team vendite interno (senza Success Fee)';
 
     result.innerHTML =
-      '<div class="q">La tua previsione economica (Setup + Fee mensile)</div>' +
-      '<div class="p">Sotto trovi i numeri e <b>cosa include ogni voce</b>. Qui non stai acquistando “servizi”: stai attivando un <b>reparto</b> con processo, sistemi e responsabilità chiare.</div>' +
+      '<div class="q">Il tuo investimento stimato</div>' +
+      '<div class="p">Stai attivando una struttura “Marketing &amp; Vendite” che lavora come un unico reparto. Sotto trovi <b>Setup Fee</b>, <b>Fee Mensile per capacità</b> e l’eventuale <b>Success Fee</b>.</div>' +
 
-      '<div class="grid">' +
-        '<div class="tile"><h3>Setup iniziale (una tantum)</h3><div class="val">'+money(out.setup)+'</div><div class="mini">Attivazione: processi, CRM, playbook e onboarding del team.</div></div>' +
-        '<div class="tile"><h3>Fee mensile (fisso)</h3><div class="val">'+money(out.monthly)+'</div><div class="mini">Direzione + reparti operativi (marketing se incluso) + setter.</div></div>' +
+      '<div class="mini" style="margin-top:6px;">' +
+        '<b>Configurazione scelta:</b> ' + marketingLabel +
+        ' · ' + tier.range +
+        ' · ' + salesLabel +
       '</div>' +
 
-      '<div class="mini" style="margin-top:12px;"><b>Configurazione scelta:</b> '+
-        'Marketing: '+marketingLabel+' · Setter: '+setterLabel+' · Closer: '+closerLabel+
+      '<div class="grid">' +
+        '<div class="tile">' +
+          '<h3>Setup Fee (una tantum)</h3>' +
+          '<div class="val">'+money(setup)+'</div>' +
+          '<div class="mini">Onboarding, CRM Setup e Strategia iniziale.</div>' +
+        '</div>' +
+        '<div class="tile">' +
+          '<h3>Fee Mensile — '+tier.name+'</h3>' +
+          '<div class="val">'+money(monthly)+'</div>' +
+          '<div class="mini">Include reparto operativo e capacità fino allo scaglione selezionato.</div>' +
+        '</div>' +
+      '</div>' +
+
+      '<div class="mini" style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap">' +
+        '<span class="pill">Capacità: '+tier.range+'</span>' +
+        '<span class="pill">Success Fee: '+(successActive ? 'Attiva' : 'Non attiva')+'</span>' +
       '</div>' +
 
       '<div class="acc" id="acc">' +
 
         '<div class="item">' +
-          '<button class="accBtn" type="button">Setup iniziale — cosa include <span>'+money(out.setup)+'</span></button>' +
-          '<div class="panel"><ul style="margin:10px 0 0 18px;padding:0">' +
-            '<li><b>Audit processi & obiettivi</b> — mappiamo attriti, priorità commerciali e numeri da controllare.</li>' +
-            '<li><b>Setup CRM & Pipeline anti-perdita</b> — stati, regole, responsabilità e tracciamento end-to-end.</li>' +
-            '<li><b>Automazioni & messaggistica</b> — follow-up, nurturing, tag, fit scoring e recupero lead persi.</li>' +
-            '<li><b>Playbook operativo</b> — script, checklist, standard di contatto e qualità appuntamenti.</li>' +
-            (state.marketing==='yes'
-              ? '<li><b>Strategia + Lead Generation</b> — setup ADV, tracciamenti e ottimizzazione con KPI collegati alle vendite.</li>'
-              : '<li><b>Integrazione con team/agenzia</b> — KPI condivisi, allineamento marketing→vendite e regia su pipeline/follow-up.</li>') +
-            '<li><b>Formazione Setter</b> ('+out.sCount+' risorse) — qualificazione, gestione obiezioni e agenda “pulita”.</li>' +
-            (out.closerCount
-              ? '<li><b>Onboarding Closer</b> — metodo di chiusura, handover dai setter, pipeline e responsabilità fino alla firma.</li>'
-              : '<li><b>Allineamento team vendite interno</b> — pipeline, follow-up e forecast per aumentare controllo e conversioni.</li>') +
-          '</ul></div>' +
-        '</div>' +
-
-        '<div class="item">' +
-          '<button class="accBtn" type="button">Fee mensile — cosa include <span>'+money(out.monthly)+'</span></button>' +
-          '<div class="panel"><ul style="margin:10px 0 0 18px;padding:0">' +
-            '<li><b>Direzione & Project Management</b> — KPI unificati, forecast, correzioni rapide e regia del reparto.</li>' +
-            (state.marketing==='yes'
-              ? '<li><b>Marketing (Strategia + Lead Gen)</b> — gestione campagne, ottimizzazione e report in logica fatturato.</li>'
-              : '<li><b>Regia su marketing esistente</b> — allineamento KPI e flusso lead→appuntamento→vendita.</li>') +
-            '<li><b>Setter</b> ('+out.sCount+') — contatto, qualificazione, recupero, agenda e controllo qualità appuntamenti.</li>' +
-          '</ul>' +
-          '<div class="mini" style="margin-top:10px;">' +
-            (state.closer==='ms1'
-              ? '<b>Nota Closer:</b> la chiusura è a provvigione e si attiva sul fatturato generato.'
-              : '<b>Nota:</b> con chiusura interna, impostiamo processo e controllo per rendere la vendita più prevedibile.') +
-          '</div></div>' +
-        '</div>' +
-
-        '<div class="item">' +
-          '<button class="accBtn" type="button">Prossimo step — Audit gratuito con uno strategist <span>Gratis</span></button>' +
+          '<button class="accBtn" type="button">' +
+            '<div class="accLeft">' +
+              '<i class="accIcon">+</i>' +
+              '<div class="accTitle">Cosa include la Setup Fee</div>' +
+            '</div>' +
+            '<span>'+money(setup)+'</span>' +
+          '</button>' +
           '<div class="panel">' +
-            '<p style="margin:10px 0 0">L’<b>Audit gratuito</b> serve a trasformare questa previsione in una configurazione reale sul tuo caso:</p>' +
-            '<ul style="margin:10px 0 0 18px;padding:0">' +
-              '<li>Validiamo obiettivo, volumi e capacità (marketing → setter → closer).</li>' +
-              '<li>Definiamo KPI, pipeline, tempi di contatto e standard di qualificazione.</li>' +
-              '<li>Impostiamo una roadmap 30 giorni con responsabilità chiare e priorità operative.</li>' +
+            '<ul>' +
+              '<li><b>Onboarding e allineamento obiettivi</b> (numeri, priorità, vincoli, timing).</li>' +
+              '<li><b>CRM Setup</b> e struttura pipeline (stati, regole, responsabilità, tracking end-to-end).</li>' +
+              '<li><b>Automazioni</b> per non perdere lead (follow-up, nurturing, reminder, tagging, scoring).</li>' +
+              '<li><b>Strategia iniziale</b> e architettura del processo: lead → contatto → qualifica → appuntamento → vendita.</li>' +
+              '<li><b>Playbook operativo</b> (standard di contatto, qualità appuntamenti, QA e controllo).</li>' +
+            '</ul>' +
+          '</div>' +
+        '</div>' +
+
+        '<div class="item">' +
+          '<button class="accBtn" type="button">' +
+            '<div class="accLeft">' +
+              '<i class="accIcon">+</i>' +
+              '<div class="accTitle">Cosa include la Fee Mensile Base</div>' +
+            '</div>' +
+            '<span>'+tier.range.replace('lead/mese','lead')+'</span>' +
+          '</button>' +
+          '<div class="panel">' +
+            '<ul>' +
+              '<li><b>Media Buyer</b> e gestione operativa campagne (lead generation + ottimizzazione).</li>' +
+              '<li><b>Setter dedicati</b> (contatto, qualifica, agenda, standard e controllo qualità).</li>' +
+              '<li><b>Direzione Operativa / QA</b> (KPI, forecast, correzioni e miglioramento continuo).</li>' +
+              '<li><b>Capacità fino allo scaglione</b> selezionato (per mantenere velocità e qualità).</li>' +
+              (state.marketing === 'integrate'
+                ? '<li><b>Integrazione con team/agenzia</b>: regia unica, KPI condivisi, CRM e flusso commerciale senza sostituzione.</li>'
+                : '<li><b>Marketing MarkSelling</b>: strategia + lead generation con tracking e ottimizzazione in logica vendite.</li>'
+              ) +
+            '</ul>' +
+          '</div>' +
+        '</div>' +
+
+        '<div class="item">' +
+          '<button class="accBtn" type="button">' +
+            '<div class="accLeft">' +
+              '<i class="accIcon">+</i>' +
+              '<div class="accTitle">Clausola a Scalini: perché aumenta la fee</div>' +
+            '</div>' +
+            '<span>'+tier.name+'</span>' +
+          '</button>' +
+          '<div class="panel">' +
+            '<p style="margin:10px 0 0">' +
+              'Le tariffe a scaglioni si applicano quando il successo della campagna genera un volume di lead che <b>satura la capacità operativa</b>.' +
+              ' L’aumento non è “un extra”: è <b>capacità</b> (più copertura, più controllo, più qualità) per evitare perdita di lead e appuntamenti scadenti.' +
+            '</p>' +
+            '<ul>' +
+              '<li><b>Livello 1 Base</b>: fino a 150 lead/mese → '+money(3500)+'/mese</li>' +
+              '<li><b>Livello 2 Crescita</b>: 151–250 lead/mese → '+money(4000)+'/mese</li>' +
+              '<li><b>Livello 3 Espansione</b>: 251–400 lead/mese → '+money(5000)+'/mese</li>' +
+              '<li><b>Livello 4 Full Scale</b>: 401–600 lead/mese → '+money(6500)+'/mese</li>' +
+            '</ul>' +
+          '</div>' +
+        '</div>' +
+
+        '<div class="item">' +
+          '<button class="accBtn" type="button">' +
+            '<div class="accLeft">' +
+              '<i class="accIcon">+</i>' +
+              '<div class="accTitle">Success Fee: quando si applica</div>' +
+            '</div>' +
+            '<span>'+(successActive ? 'Attiva' : 'Non attiva')+'</span>' +
+          '</button>' +
+          '<div class="panel">' +
+            (successActive
+              ? '<p style="margin:10px 0 0">La Success Fee si applica solo se attivi i <b>Closer MarkSelling</b>: è la commissione del team vendite sulla parte di fatturato generata dalle chiusure. In pratica, ci assumiamo la responsabilità commerciale fino alla firma.</p>'
+              : '<p style="margin:10px 0 0">Non si applica perché la chiusura resta al tuo team vendite. Noi lavoriamo su processo, CRM, qualità appuntamenti e standard per aumentare conversione e prevedibilità.</p>'
+            ) +
+          '</div>' +
+        '</div>' +
+
+        '<div class="item">' +
+          '<button class="accBtn" type="button">' +
+            '<div class="accLeft">' +
+              '<i class="accIcon">+</i>' +
+              '<div class="accTitle">Prossimo step — Audit gratuito con uno strategist</div>' +
+            '</div>' +
+            '<span>Gratis</span>' +
+          '</button>' +
+          '<div class="panel">' +
+            '<p style="margin:10px 0 0">' +
+              'Nel call di Audit gratuito con uno strategist validiamo i numeri sul tuo caso reale e impostiamo la configurazione migliore.' +
+            '</p>' +
+            '<ul>' +
+              '<li>Validazione obiettivi e capacità (Marketing → Setter → Closer).</li>' +
+              '<li>Check su pipeline, tempi di contatto, KPI e standard operativi.</li>' +
+              '<li>Roadmap di avvio con responsabilità chiare.</li>' +
             '</ul>' +
           '</div>' +
         '</div>' +
@@ -401,7 +639,8 @@
       '</div>' +
 
       '<a class="cta" href="https://www.markselling.it/booking-audit/" target="_blank" rel="noopener">PRENOTA AUDIT GRATUITO CON UNO STRATEGIST →</a>' +
-      '<div class="mini" style="margin-top:10px;">Nessun vincolo, nessun impegno. Serve a capire se e come MarkSelling può portarti risultati misurabili.</div>';
+      '<div class="fine">Consulenza gratuita, zero vincoli. Serve a validare la configurazione e rendere il processo “Marketing &amp; Vendite” realmente prevedibile.</div>'
+    ;
 
     accordionSingle(document.getElementById('acc'));
   }
@@ -415,8 +654,11 @@
   });
 
   restart.addEventListener('click', function(){
-    state.marketing=null; state.setter=null; state.closer=null;
-    idx=0; result.style.display='none';
+    state.marketing=null;
+    state.capacity=null;
+    state.closer=null;
+    idx=0;
+    result.style.display='none';
     render();
   });
 
