@@ -18,6 +18,8 @@
       --text:#ffffff;
       --muted:rgba(255,255,255,.72);
       --muted2:rgba(255,255,255,.62);
+      --bad:#F25D6C;
+      --good:#32D69A;
     }
 
     *{box-sizing:border-box}
@@ -134,6 +136,7 @@
     }
 
     .mini{margin-top:12px;color:rgba(255,255,255,.62);font-size:12.5px;line-height:1.55}
+    .mini b{color:#fff}
 
     .foot{
       padding:14px 24px 22px;
@@ -178,6 +181,7 @@
     }
     .tile h3{margin:0 0 6px;font-weight:950;font-size:15px}
     .val{color:#E7D7A2;font-weight:950;font-size:28px;margin-top:2px}
+
     .pill{
       display:inline-flex;align-items:center;gap:10px;
       padding:10px 12px;border-radius:999px;
@@ -185,6 +189,16 @@
       background:rgba(184,155,86,.08);
       color:#E7D7A2;font-weight:900;font-size:12.5px;
     }
+
+    .statusPill{
+      display:inline-flex;align-items:center;gap:10px;
+      padding:10px 12px;border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.05);
+      color:#fff;font-weight:900;font-size:12.5px;
+    }
+    .statusPill.good{border-color:rgba(50,214,154,.22); background:rgba(50,214,154,.08); color:#CFF5E7}
+    .statusPill.bad{border-color:rgba(242,93,108,.22); background:rgba(242,93,108,.08); color:#FFD0D6}
 
     /* Accordion */
     .acc{
@@ -268,6 +282,13 @@
       box-shadow:0 10px 30px rgba(130,77,235,.22);
     }
     .cta:hover{filter:brightness(1.03);transform:translateY(-1px)}
+    .cta.secondary{
+      border-color:rgba(255,255,255,.14);
+      background:rgba(255,255,255,.06);
+      box-shadow:none;
+      color:#fff;
+    }
+
     .fine{margin-top:10px;color:rgba(255,255,255,.62);font-size:12.5px;line-height:1.55}
   </style>
 </head>
@@ -279,7 +300,7 @@
       <div class="head">
         <h1>MarkSelling™ — Previsione Strategica del Reparto</h1>
         <div class="sub">
-          Configura in 4 step il tuo reparto “Marketing &amp; Vendite”: <b>Marketing</b> (strategia + lead generation),
+          Configura in pochi step il tuo reparto “Marketing &amp; Vendite”: <b>Marketing</b> (strategia + lead generation),
           <b>Setter</b> (contatto, qualifica, agenda), <b>Closer</b> (vendita e firma).
           A fine flow vedrai <b>Setup Fee</b> + <b>Fee Mensile</b> (a scalini per capacità) e l’eventuale <b>Success Fee</b>.
         </div>
@@ -287,8 +308,8 @@
 
       <div class="progress">
         <div class="progressTop">
-          <div id="stepTxt">Step 1/4</div>
-          <div>Tempo stimato: 45s</div>
+          <div id="stepTxt">Step 1/6</div>
+          <div>Tempo stimato: 45–60s</div>
         </div>
         <div class="barBg"><div class="bar" id="bar"></div></div>
       </div>
@@ -314,19 +335,35 @@
   var result = document.getElementById('result');
 
   // ===== Stato =====
-  // marketing: 'ms' | 'integrate'
-  // capacity: 150 | 250 | 400 | 600
-  // closer: 'ms' | 'internal'
-  var state = { marketing:null, capacity:null, closer:null };
+  var state = { marketing:null, revenue:null, budget:null, capacity:null, closer:null };
+
+  // ===== UNICO filtro: fatturato >= 300k =====
+  function isFit(){
+    return (state.revenue === '300_1000' || state.revenue === 'gt1000');
+  }
+
+  function revenueLabel(v){
+    if(v==='lt300') return '< €300k/anno';
+    if(v==='300_1000') return '€300k–€1M/anno';
+    if(v==='gt1000') return '> €1M/anno';
+    return '—';
+  }
+  function budgetLabel(v){
+    if(v==='lt3') return '< €3k/mese';
+    if(v==='3_6') return '€3k–€6k/mese';
+    if(v==='6_10') return '€6k–€10k/mese';
+    if(v==='gt10') return '> €10k/mese';
+    return '—';
+  }
 
   // ===== Pricing (Netto IVA) =====
   var SETUP_FEE = 2750;
 
   var TIERS = [
-    { cap:150, name:'Livello 1 Base',    monthly:3500, range:'Fino a 150 lead/mese' },
-    { cap:250, name:'Livello 2 Crescita',monthly:4000, range:'Da 151 a 250 lead/mese' },
-    { cap:400, name:'Livello 3 Espansione',monthly:5000, range:'Da 251 a 400 lead/mese' },
-    { cap:600, name:'Livello 4 Full Scale',monthly:6500, range:'Da 401 a 600 lead/mese' }
+    { cap:150, name:'Livello 1 Base',       monthly:3500, range:'Fino a 150 lead/mese' },
+    { cap:250, name:'Livello 2 Crescita',   monthly:4000, range:'Da 151 a 250 lead/mese' },
+    { cap:400, name:'Livello 3 Espansione', monthly:5000, range:'Da 251 a 400 lead/mese' },
+    { cap:600, name:'Livello 4 Full Scale', monthly:6500, range:'Da 401 a 600 lead/mese' }
   ];
 
   function getTier(cap){
@@ -343,9 +380,8 @@
     {
       key:'marketing',
       q:'Step 1 — Marketing (strategia + lead generation): come lo vuoi gestire?',
-      p:'Qui definiamo <b>chi guida la macchina dei lead</b>. Il Marketing MarkSelling non è “fare ads”: è strategia, tracciamento, creatività e ottimizzazione con un solo obiettivo: <b>portare lead che i Setter possono convertire in appuntamenti</b> (e quindi vendite). Se hai già un team o un’agenzia, <b>non ti chiediamo di cambiarla</b>: la integriamo nel nostro processo con KPI e regia unificata.',
+      p:'Qui definiamo <b>chi guida la macchina dei lead</b>. Il Marketing MarkSelling non è “fare ads”: è strategia, tracciamento, creatività e ottimizzazione con un solo obiettivo: <b>lead lavorabili</b> che i Setter possono convertire in appuntamenti (e quindi vendite). Se hai già un team o un’agenzia, <b>non ti chiediamo di cambiarla</b>: la integriamo nel nostro processo con KPI e regia unificata.',
       choices:[
-        // positive first
         {k:'marketing', v:'ms', label:'Sì, voglio Marketing MarkSelling', style:'violet',
           s:'Gestiamo strategia + lead generation: campagne, tracking, KPI e ottimizzazione in logica vendite.'},
         {k:'marketing', v:'integrate', label:'No, ho già team/agenzia (integriamo)', style:'gold',
@@ -353,39 +389,54 @@
       ]
     },
     {
-      key:'capacity',
-      q:'Step 2 — Setter (qualifica e agenda): che capacità di gestione ti serve?',
-      p:'I Setter sono il <b>team commerciale operativo</b>: contattano i lead, li qualificano, gestiscono obiezioni iniziali e fissano appuntamenti in agenda al reparto vendite. La fee mensile cresce solo quando il volume di lead <b>satura la capacità operativa</b> e serve più struttura per mantenere standard, velocità e qualità.',
+      key:'revenue',
+      q:'Step 2 — Fatturato annuo: in che fascia sei?',
+      p:'Questo passaggio serve a contestualizzare la fase di crescita e la struttura più adatta.',
       choices:[
-        // positive first, highest clarity
-        {k:'capacity', v:150, label:'Capacità Base', style:'violet',
-          s:'Fino a 150 lead/mese (standard di contatto + qualifica + agenda).'},
-        {k:'capacity', v:250, label:'Capacità Crescita', style:'gold',
-          s:'Da 151 a 250 lead/mese (più copertura e continuità operativa).'},
-        {k:'capacity', v:400, label:'Capacità Espansione', style:'violet',
-          s:'Da 251 a 400 lead/mese (scalabilità e presidio costante).'},
-        {k:'capacity', v:600, label:'Capacità Full Scale', style:'gold',
-          s:'Da 401 a 600 lead/mese (massima spinta + struttura dedicata).'}
+        {k:'revenue', v:'300_1000', label:'€300k – €1M/anno', style:'violet', s:'Fase ideale: struttura, KPI e previsione.'},
+        {k:'revenue', v:'gt1000', label:'Oltre €1M/anno', style:'gold', s:'Fase scale: controllo, accelerazione, governance.'},
+        {k:'revenue', v:'lt300', label:'Sotto €300k/anno', style:'violet', s:'Selezione: per questa fascia valutiamo solo percorsi diversi da MarkSelling™.'}
+      ]
+    },
+    {
+      key:'budget',
+      q:'Step 3 — Budget mensile per crescita (indicativo): quanto investi?',
+      p:'Questo dato è <b>solo informativo</b>: ci aiuta a contestualizzare l’avvio, ma <b>non blocca il risultato</b>.',
+      choices:[
+        {k:'budget', v:'6_10', label:'€6.000 – €10.000/mese', style:'violet', s:'Range tipico per sostenere una crescita strutturata.'},
+        {k:'budget', v:'gt10', label:'Oltre €10.000/mese', style:'gold', s:'Range scale: più capacità, più velocità, più controllo.'},
+        {k:'budget', v:'3_6', label:'€3.000 – €6.000/mese', style:'violet', s:'Range prudente: si lavora di priorità e sostenibilità.'},
+        {k:'budget', v:'lt3', label:'Sotto €3.000/mese', style:'gold', s:'Range minimale: si lavora per step e ottimizzazione.'}
+      ]
+    },
+    {
+      key:'capacity',
+      q:'Step 4 — Setter (qualifica e agenda): che capacità di gestione ti serve?',
+      p:'I Setter sono il <b>team commerciale operativo</b>: contattano i lead, li qualificano e fissano appuntamenti. La fee mensile cresce solo quando il volume di lead <b>satura la capacità operativa</b> e serve più struttura per mantenere standard, velocità e qualità.',
+      choices:[
+        {k:'capacity', v:150, label:'Capacità Base', style:'violet', s:'Fino a 150 lead/mese (contatto + qualifica + agenda).'},
+        {k:'capacity', v:250, label:'Capacità Crescita', style:'gold', s:'Da 151 a 250 lead/mese (più copertura e continuità).'},
+        {k:'capacity', v:400, label:'Capacità Espansione', style:'violet', s:'Da 251 a 400 lead/mese (scalabilità e presidio costante).'},
+        {k:'capacity', v:600, label:'Capacità Full Scale', style:'gold', s:'Da 401 a 600 lead/mese (massima spinta + struttura dedicata).'}
       ]
     },
     {
       key:'closer',
-      q:'Step 3 — Closer (vendita e firma): chi chiude le trattative?',
-      p:'Qui definisci <b>chi si prende la responsabilità della vendita</b>. Se hai un team interno, lo supportiamo con pipeline, script e follow-up per rendere la chiusura più prevedibile. Se attivi i Closer MarkSelling, la chiusura viene gestita da noi e si applica una <b>Success Fee</b> (commissione sul fatturato generato).',
+      q:'Step 5 — Closer (vendita e firma): chi chiude le trattative?',
+      p:'Qui definisci <b>chi si prende la responsabilità della vendita</b>. Se attivi i Closer MarkSelling, la chiusura viene gestita da noi e si applica una <b>Success Fee</b> (commissione sul fatturato generato).',
       choices:[
-        // positive first
         {k:'closer', v:'ms', label:'Sì, voglio i Closer MarkSelling', style:'violet',
           s:'Attiva Success Fee: il team vendite MarkSelling gestisce la trattativa fino alla firma.'},
         {k:'closer', v:'internal', label:'No, chiudono i miei commerciali', style:'gold',
-          s:'La vendita resta interna: allineiamo processo, pipeline, script e follow-up.'}
+          s:'La vendita resta interna: allineiamo pipeline, script e follow-up.'}
       ]
     },
     {
       key:'output',
-      q:'Step 4 — Riepilogo investimento (Setup + Fee Mensile + Success Fee)',
-      p:'Qui trovi la previsione economica completa. Non scomponiamo i costi “voce per voce”: ti mostriamo <b>cosa include ogni blocco</b>, perché stai attivando un reparto operativo (non una lista di servizi).',
+      q:'Step 6 — Riepilogo (Setup + Fee Mensile + Success Fee)',
+      p:'Qui trovi il risultato completo.',
       choices:[
-        {k:'output', v:'go', label:'Mostrami il preventivo', style:'violet', s:'Genera la previsione economica completa.'}
+        {k:'output', v:'go', label:'Mostrami il risultato', style:'violet', s:'Genera esito + prossimi step.'}
       ]
     }
   ];
@@ -419,10 +470,12 @@
 
     if(idx>0){
       var mLab = state.marketing ? (state.marketing==='ms' ? 'Marketing MarkSelling' : 'Integrazione team/agenzia') : '—';
+      var rLab = state.revenue ? ('Fatturato: ' + revenueLabel(state.revenue)) : '—';
+      var bLab = state.budget ? ('Budget: ' + budgetLabel(state.budget)) : '—';
       var cLab = state.capacity ? ('Capacità: fino a ' + state.capacity + ' lead/mese') : '—';
       var vLab = state.closer ? (state.closer==='ms' ? 'Vendite: Closer MarkSelling (Success Fee)' : 'Vendite: team interno') : '—';
 
-      html += '<div class="mini"><b>Scelte attuali:</b> ' + mLab + ' · ' + cLab + ' · ' + vLab + '</div>';
+      html += '<div class="mini"><b>Scelte attuali:</b> ' + mLab + ' · ' + rLab + (state.budget?(' · ' + bLab):'') + (state.capacity?(' · ' + cLab):'') + (state.closer?(' · ' + vLab):'') + '</div>';
     }
 
     body.innerHTML = html;
@@ -433,12 +486,6 @@
         var v = btn.getAttribute('data-v');
 
         if(k==='capacity') v = parseInt(v,10);
-
-        // normalize internal values
-        if(k==='closer' && v==='internal') v='internal';
-        if(k==='closer' && v==='ms') v='ms';
-        if(k==='marketing' && v==='ms') v='ms';
-        if(k==='marketing' && v==='integrate') v='integrate';
 
         state[k] = v;
 
@@ -484,11 +531,56 @@
       });
     });
 
-    // tutti chiusi di default (setup incluso)
     closeAll();
   }
 
-  function showResult(){
+  function showExcluded(){
+    body.innerHTML = '';
+    result.style.display = 'block';
+
+    var badge = '<span class="statusPill bad">Esito: non idoneo al programma MarkSelling™</span>';
+    var marketingLabel =
+      (state.marketing === 'ms')
+        ? 'Marketing MarkSelling (strategia + lead generation)'
+        : 'Integrazione con team/agenzia esistente';
+
+    result.innerHTML =
+      '<div class="q">Selezione completata</div>' +
+      '<div class="p">In base ai dati inseriti, la tua azienda rientra in una fase in cui <b>MarkSelling™</b> non è il programma più adatto. ' +
+      'Per garantire standard e risultati, riserviamo MarkSelling™ ad aziende già strutturate.</div>' +
+
+      '<div class="mini" style="margin-top:6px;">' +
+        badge +
+        '<div style="margin-top:10px">' +
+          '<b>Configurazione:</b> ' + marketingLabel +
+          ' · <b>Fatturato:</b> ' + revenueLabel(state.revenue) +
+          (state.budget ? (' · <b>Budget:</b> ' + budgetLabel(state.budget)) : '') +
+        '</div>' +
+      '</div>' +
+
+      '<div class="grid" style="margin-top:14px">' +
+        '<div class="tile">' +
+          '<h3>Cosa puoi fare adesso</h3>' +
+          '<div class="mini" style="margin-top:10px">' +
+            'Se vuoi, prenota comunque un Audit: ti diremo in modo diretto ' +
+            'quali leve sbloccare per arrivare alla fase “MarkSelling™ ready”.' +
+          '</div>' +
+        '</div>' +
+        '<div class="tile">' +
+          '<h3>Obiettivo</h3>' +
+          '<div class="mini" style="margin-top:10px">' +
+            'Portare la struttura (processo, pipeline e metriche) al livello in cui un reparto unificato ' +
+            'può scalare senza dispersione.' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+
+      '<a class="cta secondary" href="https://www.markselling.it/booking-audit/" target="_blank" rel="noopener">PRENOTA AUDIT →</a>' +
+      '<div class="fine">Audit gratuito: ricevi una roadmap chiara. Nessun vincolo.</div>'
+    ;
+  }
+
+  function showFit(){
     body.innerHTML = '';
     result.style.display = 'block';
 
@@ -507,14 +599,21 @@
         ? 'Closer MarkSelling (Success Fee % sul fatturato)'
         : 'Team vendite interno (senza Success Fee)';
 
+    var badge = '<span class="statusPill good">Esito: idoneo a MarkSelling™</span>';
+
     result.innerHTML =
       '<div class="q">Il tuo investimento stimato</div>' +
       '<div class="p">Stai attivando una struttura “Marketing &amp; Vendite” che lavora come un unico reparto. Sotto trovi <b>Setup Fee</b>, <b>Fee Mensile per capacità</b> e l’eventuale <b>Success Fee</b>.</div>' +
 
       '<div class="mini" style="margin-top:6px;">' +
-        '<b>Configurazione scelta:</b> ' + marketingLabel +
-        ' · ' + tier.range +
-        ' · ' + salesLabel +
+        badge +
+        '<div style="margin-top:10px;">' +
+          '<b>Configurazione:</b> ' + marketingLabel +
+          ' · <b>Fatturato:</b> ' + revenueLabel(state.revenue) +
+          (state.budget ? (' · <b>Budget:</b> ' + budgetLabel(state.budget)) : '') +
+          ' · ' + tier.range +
+          ' · ' + salesLabel +
+        '</div>' +
       '</div>' +
 
       '<div class="grid">' +
@@ -560,7 +659,7 @@
           '<button class="accBtn" type="button">' +
             '<div class="accLeft">' +
               '<i class="accIcon">+</i>' +
-              '<div class="accTitle">Cosa include la Fee Mensile Base</div>' +
+              '<div class="accTitle">Cosa include la Fee Mensile</div>' +
             '</div>' +
             '<span>'+tier.range.replace('lead/mese','lead')+'</span>' +
           '</button>' +
@@ -589,7 +688,7 @@
           '<div class="panel">' +
             '<p style="margin:10px 0 0">' +
               'Le tariffe a scaglioni si applicano quando il successo della campagna genera un volume di lead che <b>satura la capacità operativa</b>.' +
-              ' L’aumento non è “un extra”: è <b>capacità</b> (più copertura, più controllo, più qualità) per evitare perdita di lead e appuntamenti scadenti.' +
+              ' L’aumento è <b>capacità</b> (più copertura, più controllo, più qualità) per evitare perdita di lead e appuntamenti scadenti.' +
             '</p>' +
             '<ul>' +
               '<li><b>Livello 1 Base</b>: fino a 150 lead/mese → '+money(3500)+'/mese</li>' +
@@ -610,7 +709,7 @@
           '</button>' +
           '<div class="panel">' +
             (successActive
-              ? '<p style="margin:10px 0 0">La Success Fee si applica solo se attivi i <b>Closer MarkSelling</b>: è la commissione del team vendite sulla parte di fatturato generata dalle chiusure. In pratica, ci assumiamo la responsabilità commerciale fino alla firma.</p>'
+              ? '<p style="margin:10px 0 0">La Success Fee si applica solo se attivi i <b>Closer MarkSelling</b>: è la commissione sul fatturato generato dalle chiusure. In pratica, ci assumiamo la responsabilità commerciale fino alla firma.</p>'
               : '<p style="margin:10px 0 0">Non si applica perché la chiusura resta al tuo team vendite. Noi lavoriamo su processo, CRM, qualità appuntamenti e standard per aumentare conversione e prevedibilità.</p>'
             ) +
           '</div>' +
@@ -626,7 +725,7 @@
           '</button>' +
           '<div class="panel">' +
             '<p style="margin:10px 0 0">' +
-              'Nel call di Audit gratuito con uno strategist validiamo i numeri sul tuo caso reale e impostiamo la configurazione migliore.' +
+              'Nel call di Audit gratuito validiamo i numeri sul tuo caso reale e impostiamo la configurazione migliore.' +
             '</p>' +
             '<ul>' +
               '<li>Validazione obiettivi e capacità (Marketing → Setter → Closer).</li>' +
@@ -645,6 +744,11 @@
     accordionSingle(document.getElementById('acc'));
   }
 
+  function showResult(){
+    if(isFit()) showFit();
+    else showExcluded();
+  }
+
   back.addEventListener('click', function(){
     if(idx>0){
       result.style.display='none';
@@ -655,6 +759,8 @@
 
   restart.addEventListener('click', function(){
     state.marketing=null;
+    state.revenue=null;
+    state.budget=null;
     state.capacity=null;
     state.closer=null;
     idx=0;
